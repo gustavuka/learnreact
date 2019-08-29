@@ -6,7 +6,7 @@ class IndecisionApp extends React.Component {
         this.handleAddOption = this.handleAddOption.bind(this);
         this.handleDeleteOption = this.handleDeleteOption.bind(this);
         this.state = {
-            options: props.options
+            options: []
         };
     }
     componentDidMount() {
@@ -17,7 +17,6 @@ class IndecisionApp extends React.Component {
             if (options) {
                 this.setState(() => ({ options }));
             }
-
         } catch (e) {
             // Do nothing
         }        
@@ -54,6 +53,10 @@ class IndecisionApp extends React.Component {
         this.setState((prevState) => ({
             options: prevState.options.concat(option)
         }));
+
+        if (!error) {
+            e.target.elements.option.value = '';
+        }
     }
     render () {
         const subtitle = 'Put your life in the hands of a computer'
@@ -74,10 +77,6 @@ class IndecisionApp extends React.Component {
             </div>
         );
     }
-}
-
-IndecisionApp.defaultProps = {
-    options: []
 }
 
 const Header = (props) => {
@@ -110,6 +109,7 @@ const Options = (props) => {
     return (
         <div>
             <button onClick={props.handleDeleteOptions}>Removel All</button>
+            {props.options.length === 0 && <p>Please add an option to get started!</p>}
             {
             props.options.map((option) => (
                 <Option 
