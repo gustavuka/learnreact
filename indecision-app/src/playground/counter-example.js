@@ -12,7 +12,7 @@ class Counter extends React.Component {
         try {
             const json = localStorage.getItem('count')
             const count = JSON.parse(json)
-            if (count) {
+            if (!isNaN(count)) {
                 this.setState(() => ({ count }));
             } 
         } catch (e) {
