@@ -1,19 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { defaultCipherList } from 'constants';
+import ExpenseListItem from './ExpenseListItem';
+import getVisibleExpenses from '../selectors/expenses';
 
 const ExpenseList = (props) => (
     <div>
         <h1>EXPENSE LIST</h1>
-        { props.expenses.length }
-        { props.filters.text }
+        { props.expenses.map((expense) => (
+            <ExpenseListItem key={expense.id} {...expense} />
+        ))}
+        
     </div>
 );
 
 const mapStatetoProps = (state) => {
     return {
-        expenses: state.expenses,
-        filters: state.filters
+        expenses: getVisibleExpenses(state.expenses, state.filters),
     };
 };
 
