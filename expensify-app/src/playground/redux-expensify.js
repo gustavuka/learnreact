@@ -154,7 +154,6 @@ const store = createStore(
 store.subscribe(() => {
     const state = store.getState();
     const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
-    console.log(visibleExpenses);
 });
 
 const expenseOne = store.dispatch(ad({ description: 'Rent', amount: 1000, createdAt: -21000 }));
