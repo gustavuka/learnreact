@@ -15,30 +15,76 @@ firebase.initializeApp(firebaseConfig)
 
 const database = firebase.database()
 
-database
-  .ref()
-  .set({
-    name: "Gus",
-    age: 29,
-    isSingle: false,
-    location: {
-      city: "Floripa",
-      country: "Brasil",
-    },
-  })
-  .then(() => {
-    console.log("data is saved")
-  })
-  .catch((error) => {
-    console.log("This failed:", error)
-  })
+//child removed
+database.ref("expenses").on("child_removed", (snapshot) => {
+  console.log(snapshot.key, snapshot.val())
+})
 
-database
-  .ref("attributes")
-  .set({ height: 1.8, weight: 75 })
-  .then(() => {
-    console.log("hello")
-  })
-  .catch((error) => {
-    console.log("asdasdsa", error)
-  })
+//child changed
+database.ref("expenses").on("child_changed", (snapshot) => {
+  console.log(snapshot.key, snapshot.val())
+})
+
+//child added
+database.ref("expenses").on("child_added", (snapshot) => {
+  console.log(snapshot.key, snapshot.val())
+})
+
+// database.ref("expenses").on("value", (snapshshot) => {
+//   const expenses = []
+
+//   snapshshot.forEach((childSnapshot) => {
+//     expenses.push({
+//       id: childSnapshot.key,
+//       ...childSnapshot.val(),
+//     })
+
+//     console.log(expenses)
+//   })
+// })
+
+// database.ref("expenses").push({
+//   description: "Rent",
+//   note: "May 11th",
+//   amount: 300,
+//   createdAt: "11-02-2020",
+// })
+
+// database
+//   .ref()
+//   .set({
+//     name: "Gus",
+//     age: 29,
+//     stressLevel: 6,
+//     job: {
+//       title: "Software Developer",
+//       company: "Google",
+//     },
+//     location: {
+//       city: "Floripa",
+//       country: "Brasil",
+//     },
+//   })
+//   .then(() => {
+//     console.log("data is saved")
+//   })
+//   .catch((error) => {
+//     console.log("This failed:", error)
+//   })
+
+// const onValueChange = database.ref().on(
+//   "value",
+//   (snapshot) => {
+//     const data = snapshot.val()
+//     console.log(`${data.name} is a ${data.job.title} at ${data.job.company}`)
+//   },
+//   (e) => {
+//     console.log("Error:", e)
+//   }
+// )
+
+// database.ref().update({
+//   stressLevel: 9,
+//   "job/company": "Amazon",
+//   "location/city": "Seattle",
+// })
